@@ -12,6 +12,9 @@ public class TakingTurnsQueueTests
     // run until the queue is empty
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
     // Defect(s) Found: 
+    // - GetNextPerson only re-enqueues people when turns > 1, but should re-enqueue when turns > 0
+    // - Person with 1 turn remaining should get that turn and then be removed, but current logic removes them before their final turn
+    // - Logic should be: if turns <= 0 (infinite) or turns > 0 after decrementing, re-enqueue the person
     public void TestTakingTurnsQueue_FiniteRepetition()
     {
         var bob = new Person("Bob", 2);
@@ -44,6 +47,8 @@ public class TakingTurnsQueueTests
     // After running 5 times, add George with 3 turns.  Run until the queue is empty.
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, George, Sue, Tim, George, Tim, George
     // Defect(s) Found: 
+    // - Same defect as first test: GetNextPerson only re-enqueues when turns > 1
+    // - This affects the sequence after George is added, causing people to be removed prematurely
     public void TestTakingTurnsQueue_AddPlayerMidway()
     {
         var bob = new Person("Bob", 2);
@@ -86,6 +91,9 @@ public class TakingTurnsQueueTests
     // Run 10 times.
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
     // Defect(s) Found: 
+    // - GetNextPerson doesn't handle infinite turns (turns <= 0) correctly
+    // - Current logic: if turns > 1, decrement and re-enqueue - this will remove infinite turn players
+    // - Should be: if turns <= 0 (infinite), re-enqueue without decrementing; if turns > 0, decrement then re-enqueue if still > 0
     public void TestTakingTurnsQueue_ForeverZero()
     {
         var timTurns = 0;
@@ -117,6 +125,9 @@ public class TakingTurnsQueueTests
     // Run 10 times.
     // Expected Result: Tim, Sue, Tim, Sue, Tim, Sue, Tim, Tim, Tim, Tim
     // Defect(s) Found: 
+    // - Same infinite turns defect: GetNextPerson treats negative turns as finite
+    // - Tim with -3 turns should never be removed, but current logic will remove him after first turn
+    // - Negative values should be treated as infinite turns and never decremented
     public void TestTakingTurnsQueue_ForeverNegative()
     {
         var timTurns = -3;
@@ -144,6 +155,9 @@ public class TakingTurnsQueueTests
     // Scenario: Try to get the next person from an empty queue
     // Expected Result: Exception should be thrown with appropriate error message.
     // Defect(s) Found: 
+    // - This test should pass as implemented - GetNextPerson correctly throws InvalidOperationException
+    // - Exception message matches expected "No one in the queue."
+    // - Uses IsEmpty() method which should work correctly
     public void TestTakingTurnsQueue_Empty()
     {
         var players = new TakingTurnsQueue();
