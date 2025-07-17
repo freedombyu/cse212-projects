@@ -32,7 +32,22 @@ public class Maze
     /// </summary>
     public void MoveLeft()
     {
-        // FILL IN CODE
+        var currentLocation = (_currX, _currY);
+        
+        if (!_mazeMap.ContainsKey(currentLocation))
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+        
+        bool[] directions = _mazeMap[currentLocation];
+        bool canMoveLeft = directions[0]; // left is index 0
+        
+        if (!canMoveLeft)
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+        
+        _currX--;
     }
 
     /// <summary>
@@ -41,7 +56,22 @@ public class Maze
     /// </summary>
     public void MoveRight()
     {
-        // FILL IN CODE
+        var currentLocation = (_currX, _currY);
+        
+        if (!_mazeMap.ContainsKey(currentLocation))
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+        
+        bool[] directions = _mazeMap[currentLocation];
+        bool canMoveRight = directions[1]; // right is index 1
+        
+        if (!canMoveRight)
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+        
+        _currX++;
     }
 
     /// <summary>
@@ -50,7 +80,22 @@ public class Maze
     /// </summary>
     public void MoveUp()
     {
-        // FILL IN CODE
+        var currentLocation = (_currX, _currY);
+        
+        if (!_mazeMap.ContainsKey(currentLocation))
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+        
+        bool[] directions = _mazeMap[currentLocation];
+        bool canMoveUp = directions[2]; // up is index 2
+        
+        if (!canMoveUp)
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+        
+        _currY--;
     }
 
     /// <summary>
@@ -59,7 +104,22 @@ public class Maze
     /// </summary>
     public void MoveDown()
     {
-        // FILL IN CODE
+        var currentLocation = (_currX, _currY);
+        
+        if (!_mazeMap.ContainsKey(currentLocation))
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+        
+        bool[] directions = _mazeMap[currentLocation];
+        bool canMoveDown = directions[3]; // down is index 3
+        
+        if (!canMoveDown)
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+        
+        _currY++;
     }
 
     public string GetStatus()
