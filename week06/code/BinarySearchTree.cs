@@ -55,7 +55,7 @@ public class BinarySearchTree : IEnumerable<int>
         }
     }
 
-    private void TraverseForward(Node? node, List<int> values)
+   private void TraverseForward(Node? node, List<int> values)
     {
         if (node is not null)
         {
@@ -76,11 +76,17 @@ public class BinarySearchTree : IEnumerable<int>
         {
             yield return number;
         }
-    }
-
-    private void TraverseBackward(Node? node, List<int> values)
+    }private void TraverseBackward(Node? node, List<int> values)
     {
-        // TODO Problem 3
+        if (node is not null)
+        {
+            // Visit right subtree first (larger values)
+            TraverseBackward(node.Right, values);
+            // Add current node's data
+            values.Add(node.Data);
+            // Visit left subtree last (smaller values)
+            TraverseBackward(node.Left, values);
+        }
     }
 
     /// <summary>

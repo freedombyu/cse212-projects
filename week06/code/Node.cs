@@ -11,7 +11,9 @@ public class Node
 
     public void Insert(int value)
     {
-        // TODO Start Problem 1
+        // Problem 1 Solution: Check for duplicates to ensure unique values only
+        if (value == Data)
+            return; // Don't insert duplicate values
 
         if (value < Data)
         {
@@ -33,13 +35,29 @@ public class Node
 
     public bool Contains(int value)
     {
-        // TODO Start Problem 2
-        return false;
+        // Problem 2 Solution: Search using BST properties
+        if (value == Data)
+            return true; // Found the value
+
+        if (value < Data)
+        {
+            // Search in left subtree
+            return Left != null && Left.Contains(value);
+        }
+        else
+        {
+            // Search in right subtree
+            return Right != null && Right.Contains(value);
+        }
     }
 
     public int GetHeight()
     {
-        // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+        // Problem 4 Solution: Calculate height recursively
+        int leftHeight = (Left != null) ? Left.GetHeight() : 0;
+        int rightHeight = (Right != null) ? Right.GetHeight() : 0;
+        
+        // Height is 1 (current node) plus the maximum height of subtrees
+        return 1 + Math.Max(leftHeight, rightHeight);
     }
 }
